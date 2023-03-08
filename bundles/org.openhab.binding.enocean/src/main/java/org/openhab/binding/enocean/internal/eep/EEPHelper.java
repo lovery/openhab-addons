@@ -20,6 +20,8 @@ import org.openhab.core.library.types.QuantityType;
 import org.openhab.core.library.unit.Units;
 import org.openhab.core.types.State;
 import org.openhab.core.types.UnDefType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -27,6 +29,8 @@ import org.openhab.core.types.UnDefType;
  *
  */
 public abstract class EEPHelper {
+    private static final Logger logger = LoggerFactory.getLogger(EEPHelper.class);
+
     public static State validateTotalUsage(State value, State currentState, Configuration config) {
         EnOceanChannelTotalusageConfig c = config.as(EnOceanChannelTotalusageConfig.class);
 
@@ -59,5 +63,20 @@ public abstract class EEPHelper {
         }
 
         return value;
+    }
+
+    public static double calculateScaledValue(int unscaledValue, double scaledMin, double scaledMax, double unscaledMin,
+            double unscaledMax) {
+
+        // Validation checkup
+        if (unscaledValue < unscaledMin) {
+            logger.warn("Unscaled value ({}) lower than the minimum allowed ({})", unscaledValue, unscaledMin);
+            return 0;
+        } else if (unscaledValue > unscaledMax) {
+            logger.warn("Unscaled value ({}) bigger than the maximum allowed ({})", unscaledValue, unscaledMax);
+            return 0;
+        }
+
+        return scaledMin + ((unscaledValue * (scaledMax - scaledMin)) / (unscaledMax - unscaledMin));
     }
 }
