@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.openhab.binding.gree.internal.GreeCryptoUtil;
 import org.openhab.binding.gree.internal.GreeException;
@@ -148,8 +149,11 @@ public class GreeAirDevice {
         }
     }
 
-    public void bindWithDevice(DatagramSocket clientSocket) throws GreeException {
+    public void bindWithDevice(DatagramSocket clientSocket, String ipAddress, GreeCryptoUtil.EncryptionTypes encType)
+            throws GreeException {
+        this.encType = encType;
         try {
+            logger.debug("Binding {} using encryption {}", ipAddress, encType);
             // Prep the Binding Request pack
             GreeBindRequestPackDTO bindReqPackGson = new GreeBindRequestPackDTO();
             bindReqPackGson.mac = getId();
@@ -168,6 +172,8 @@ public class GreeAirDevice {
             resp.decryptedPack = GreeCryptoUtil.decrypt(resp, encType);
             resp.packJson = GSON.fromJson(resp.decryptedPack, GreeBindResponsePackDTO.class);
 
+            logger.debug("Response received from address {}: {}", ipAddress, resp.decryptedPack);
+
             // Now set the key and flag to indicate the bind was successful
             encKey = resp.packJson.key;
 
@@ -177,7 +183,7 @@ public class GreeAirDevice {
             if (encType != GreeCryptoUtil.EncryptionTypes.GCM) {
                 logger.debug("Unable to bind to device - changing the encryption mode to GCM and trying again", e);
                 encType = GreeCryptoUtil.EncryptionTypes.GCM;
-                bindWithDevice(clientSocket);
+                bindWithDevice(clientSocket, ipAddress, encType);
             } else {
                 throw new GreeException("Unable to bind to device", e);
             }
@@ -534,7 +540,8 @@ public class GreeAirDevice {
     }
 
     public String getName() {
-        return scanResponseGson.isPresent() ? scanResponseGson.get().packJson.name : "";
+        return scanResponseGson.isPresent() ? StringUtils.isBlank(scanResponseGson.get().packJson.name) ? getId()
+                : scanResponseGson.get().packJson.name : "";
     }
 
     public String getVendor() {

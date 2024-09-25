@@ -30,6 +30,7 @@ import javax.measure.Unit;
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.binding.gree.internal.GreeConfiguration;
+import org.openhab.binding.gree.internal.GreeCryptoUtil;
 import org.openhab.binding.gree.internal.GreeException;
 import org.openhab.binding.gree.internal.GreeTranslationProvider;
 import org.openhab.binding.gree.internal.discovery.GreeDeviceFinder;
@@ -103,6 +104,7 @@ public class GreeHandler extends BaseThingHandler {
     private void initializeThing() {
         String message = "";
         try {
+            logger.debug("Initializing {}", config.ipAddress);
             if (clientSocket.isEmpty()) {
                 clientSocket = Optional.of(new DatagramSocket());
                 clientSocket.get().setSoTimeout(DATAGRAM_SOCKET_TIMEOUT);
@@ -113,7 +115,8 @@ public class GreeHandler extends BaseThingHandler {
             if (newDevice != null) {
                 // Ok, our device responded, now let's Bind with it
                 device = newDevice;
-                device.bindWithDevice(clientSocket.get());
+                device.bindWithDevice(clientSocket.get(), config.ipAddress,
+                        GreeCryptoUtil.EncryptionTypes.get(config.encryptionType));
                 if (device.getIsBound()) {
                     updateStatus(ThingStatus.ONLINE);
                     return;

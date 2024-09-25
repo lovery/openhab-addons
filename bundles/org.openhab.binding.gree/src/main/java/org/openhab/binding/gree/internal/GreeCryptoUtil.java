@@ -17,8 +17,12 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.HexFormat;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -47,7 +51,14 @@ public class GreeCryptoUtil {
 
     public enum EncryptionTypes {
         ECB,
-        GCM
+        GCM;
+
+        private static final Map<String, EncryptionTypes> LOOKUP_MAP = Arrays.stream(values())
+                .collect(Collectors.toMap(Enum::name, e -> e));
+
+        public static EncryptionTypes get(String name) {
+            return Optional.ofNullable(LOOKUP_MAP.get(name)).orElseThrow();
+        }
     };
 
     public static byte[] getAESGeneralKeyByteArray() {

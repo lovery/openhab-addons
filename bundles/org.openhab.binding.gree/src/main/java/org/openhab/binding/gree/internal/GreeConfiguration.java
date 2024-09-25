@@ -33,9 +33,11 @@ public class GreeConfiguration {
      */
     public BigDecimal currentTemperatureOffset = new BigDecimal(0.0);
 
+    public String encryptionType = "ECB";
+
     @Override
     public String toString() {
         return "Config: ipAddress=" + ipAddress + ", broadcastAddress=" + broadcastAddress + ", refresh=" + refresh
-                + ", currentTemperatureOffset=" + currentTemperatureOffset;
+                + ", currentTemperatureOffset=" + currentTemperatureOffset + ", encryptionType=" + encryptionType;
     }
 }
