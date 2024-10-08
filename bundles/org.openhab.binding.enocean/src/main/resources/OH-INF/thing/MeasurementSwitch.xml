@@ -38,10 +38,10 @@
 					<option value="D2_01_05">Switching, dimming and energy measurement (EEP: D2_01_05)</option>
 					<option value="D2_01_06">Switching and energy measurement (EEP: D2_01_06)</option>
 					<option value="D2_01_07">Switching (EEP: D2_01_07)</option>
-					<option value="D2_01_08">Switching, dimming and energy measurement (EEP: D2_01_08)</option>
+					<option value="D2_01_08">Switching and energy measurement (EEP: D2_01_08)</option>
 					<option value="D2_01_09">Switching, dimming and energy measurement (EEP: D2_01_09)</option>
 					<option value="D2_01_09_PERMUNDO">Permundo PSC</option>
-					<option value="D2_01_0A">Switching and energy measurement (EEP: D2_01_0A)</option>
+					<option value="D2_01_0A">Switching (EEP: D2_01_0A)</option>
 					<option value="D2_01_0B">Switching and energy measurement (EEP: D2_01_0B)</option>
 					<option value="D2_01_0C">Switching and energy measurement (EEP: D2_01_0C)</option>
 					<option value="D2_01_0D">Switching (EEP: D2_01_0D)</option>
@@ -69,10 +69,10 @@
 					<option value="D2_01_05">Switching, dimming and energy measurement (EEP: D2_01_05)</option>
 					<option value="D2_01_06">Switching and energy measurement (EEP: D2_01_06)</option>
 					<option value="D2_01_07">Switching (EEP: D2_01_07)</option>
-					<option value="D2_01_08">Switching, dimming and energy measurement (EEP: D2_01_08)</option>
+					<option value="D2_01_08">Switching and energy measurement (EEP: D2_01_08)</option>
 					<option value="D2_01_09">Switching, dimming and energy measurement (EEP: D2_01_09)</option>
 					<option value="D2_01_09_PERMUNDO">Permundo PSC</option>
-					<option value="D2_01_0A">Switching and energy measurement (EEP: D2_01_0A)</option>
+					<option value="D2_01_0A">Switching (EEP: D2_01_0A)</option>
 					<option value="D2_01_0B">Switching and energy measurement (EEP: D2_01_0B)</option>
 					<option value="D2_01_0C">Switching and energy measurement (EEP: D2_01_0C)</option>
 					<option value="D2_01_0D">Switching (EEP: D2_01_0D)</option>
