@@ -526,16 +526,15 @@ public class GreeAirDevice {
     }
 
     public void setEncryptionType(EncryptionTypes value) {
-        if (value == EncryptionTypes.UNKNOWN) {
-            logger.debug("Trying to set encryption type to 'UNKNOWN' for device: {}, current value: {}", getName(),
-                    encType);
-            if (encType == EncryptionTypes.UNKNOWN) {
-                logger.debug("Falling back to 'ECB' for device: {}", getName());
-                encType = EncryptionTypes.ECB;
-            }
-        } else {
-            logger.debug("Change encryption type for device: {}, from : {}, to: {}", getName(), encType, value);
+        logger.debug("Trying to set encryption type for device: {}, from : {}, to: {}", getName(), encType, value);
+        if (value != EncryptionTypes.UNKNOWN) {
             encType = value;
+            return;
+        }
+
+        if (encType == EncryptionTypes.UNKNOWN) {
+            logger.debug("UNKNOWN value detected for encryption type falling back to ECB for device: {}", getName());
+            encType = EncryptionTypes.ECB;
         }
     }
 
